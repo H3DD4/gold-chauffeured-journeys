@@ -9,23 +9,102 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OwnerRouteImport } from './routes/owner'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ClientRouteImport } from './routes/_client'
+import { Route as OwnerIndexRouteImport } from './routes/owner.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ClientIndexRouteImport } from './routes/_client.index'
+import { Route as OwnerFleetRouteImport } from './routes/owner.fleet'
+import { Route as OwnerEarningsRouteImport } from './routes/owner.earnings'
+import { Route as OwnerDriversRouteImport } from './routes/owner.drivers'
+import { Route as OwnerBookingsRouteImport } from './routes/owner.bookings'
+import { Route as AdminVehiclesRouteImport } from './routes/admin.vehicles'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminOwnersRouteImport } from './routes/admin.owners'
+import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
 import { Route as ClientRegisterRouteImport } from './routes/_client.register'
 import { Route as ClientMyBookingsRouteImport } from './routes/_client.my-bookings'
 import { Route as ClientLoginRouteImport } from './routes/_client.login'
 import { Route as ClientFleetRouteImport } from './routes/_client.fleet'
 import { Route as ClientBookingRouteImport } from './routes/_client.booking'
+import { Route as OwnerFleetNewRouteImport } from './routes/owner.fleet.new'
 import { Route as ClientFleetCarIdRouteImport } from './routes/_client.fleet.$carId'
 
+const OwnerRoute = OwnerRouteImport.update({
+  id: '/owner',
+  path: '/owner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClientRoute = ClientRouteImport.update({
   id: '/_client',
   getParentRoute: () => rootRouteImport,
+} as any)
+const OwnerIndexRoute = OwnerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ClientIndexRoute = ClientIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ClientRoute,
+} as any)
+const OwnerFleetRoute = OwnerFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerEarningsRoute = OwnerEarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerDriversRoute = OwnerDriversRouteImport.update({
+  id: '/drivers',
+  path: '/drivers',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerBookingsRoute = OwnerBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const AdminVehiclesRoute = AdminVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOwnersRoute = AdminOwnersRouteImport.update({
+  id: '/owners',
+  path: '/owners',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ClientRegisterRoute = ClientRegisterRouteImport.update({
   id: '/register',
@@ -52,6 +131,11 @@ const ClientBookingRoute = ClientBookingRouteImport.update({
   path: '/booking',
   getParentRoute: () => ClientRoute,
 } as any)
+const OwnerFleetNewRoute = OwnerFleetNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => OwnerFleetRoute,
+} as any)
 const ClientFleetCarIdRoute = ClientFleetCarIdRouteImport.update({
   id: '/$carId',
   path: '/$carId',
@@ -60,12 +144,26 @@ const ClientFleetCarIdRoute = ClientFleetCarIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof ClientIndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/owner': typeof OwnerRouteWithChildren
   '/booking': typeof ClientBookingRoute
   '/fleet': typeof ClientFleetRouteWithChildren
   '/login': typeof ClientLoginRoute
   '/my-bookings': typeof ClientMyBookingsRoute
   '/register': typeof ClientRegisterRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/owners': typeof AdminOwnersRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
+  '/owner/bookings': typeof OwnerBookingsRoute
+  '/owner/drivers': typeof OwnerDriversRoute
+  '/owner/earnings': typeof OwnerEarningsRoute
+  '/owner/fleet': typeof OwnerFleetRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
+  '/owner/': typeof OwnerIndexRoute
   '/fleet/$carId': typeof ClientFleetCarIdRoute
+  '/owner/fleet/new': typeof OwnerFleetNewRoute
 }
 export interface FileRoutesByTo {
   '/booking': typeof ClientBookingRoute
@@ -73,30 +171,70 @@ export interface FileRoutesByTo {
   '/login': typeof ClientLoginRoute
   '/my-bookings': typeof ClientMyBookingsRoute
   '/register': typeof ClientRegisterRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/owners': typeof AdminOwnersRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
+  '/owner/bookings': typeof OwnerBookingsRoute
+  '/owner/drivers': typeof OwnerDriversRoute
+  '/owner/earnings': typeof OwnerEarningsRoute
+  '/owner/fleet': typeof OwnerFleetRouteWithChildren
   '/': typeof ClientIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/owner': typeof OwnerIndexRoute
   '/fleet/$carId': typeof ClientFleetCarIdRoute
+  '/owner/fleet/new': typeof OwnerFleetNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_client': typeof ClientRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
+  '/owner': typeof OwnerRouteWithChildren
   '/_client/booking': typeof ClientBookingRoute
   '/_client/fleet': typeof ClientFleetRouteWithChildren
   '/_client/login': typeof ClientLoginRoute
   '/_client/my-bookings': typeof ClientMyBookingsRoute
   '/_client/register': typeof ClientRegisterRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/owners': typeof AdminOwnersRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
+  '/owner/bookings': typeof OwnerBookingsRoute
+  '/owner/drivers': typeof OwnerDriversRoute
+  '/owner/earnings': typeof OwnerEarningsRoute
+  '/owner/fleet': typeof OwnerFleetRouteWithChildren
   '/_client/': typeof ClientIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/owner/': typeof OwnerIndexRoute
   '/_client/fleet/$carId': typeof ClientFleetCarIdRoute
+  '/owner/fleet/new': typeof OwnerFleetNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/owner'
     | '/booking'
     | '/fleet'
     | '/login'
     | '/my-bookings'
     | '/register'
+    | '/admin/bookings'
+    | '/admin/owners'
+    | '/admin/settings'
+    | '/admin/users'
+    | '/admin/vehicles'
+    | '/owner/bookings'
+    | '/owner/drivers'
+    | '/owner/earnings'
+    | '/owner/fleet'
+    | '/admin/'
+    | '/owner/'
     | '/fleet/$carId'
+    | '/owner/fleet/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/booking'
@@ -104,26 +242,68 @@ export interface FileRouteTypes {
     | '/login'
     | '/my-bookings'
     | '/register'
+    | '/admin/bookings'
+    | '/admin/owners'
+    | '/admin/settings'
+    | '/admin/users'
+    | '/admin/vehicles'
+    | '/owner/bookings'
+    | '/owner/drivers'
+    | '/owner/earnings'
+    | '/owner/fleet'
     | '/'
+    | '/admin'
+    | '/owner'
     | '/fleet/$carId'
+    | '/owner/fleet/new'
   id:
     | '__root__'
     | '/_client'
+    | '/admin'
+    | '/owner'
     | '/_client/booking'
     | '/_client/fleet'
     | '/_client/login'
     | '/_client/my-bookings'
     | '/_client/register'
+    | '/admin/bookings'
+    | '/admin/owners'
+    | '/admin/settings'
+    | '/admin/users'
+    | '/admin/vehicles'
+    | '/owner/bookings'
+    | '/owner/drivers'
+    | '/owner/earnings'
+    | '/owner/fleet'
     | '/_client/'
+    | '/admin/'
+    | '/owner/'
     | '/_client/fleet/$carId'
+    | '/owner/fleet/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   ClientRoute: typeof ClientRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
+  OwnerRoute: typeof OwnerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/owner': {
+      id: '/owner'
+      path: '/owner'
+      fullPath: '/owner'
+      preLoaderRoute: typeof OwnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_client': {
       id: '/_client'
       path: ''
@@ -131,12 +311,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/': {
+      id: '/owner/'
+      path: '/'
+      fullPath: '/owner/'
+      preLoaderRoute: typeof OwnerIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/_client/': {
       id: '/_client/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof ClientIndexRouteImport
       parentRoute: typeof ClientRoute
+    }
+    '/owner/fleet': {
+      id: '/owner/fleet'
+      path: '/fleet'
+      fullPath: '/owner/fleet'
+      preLoaderRoute: typeof OwnerFleetRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/earnings': {
+      id: '/owner/earnings'
+      path: '/earnings'
+      fullPath: '/owner/earnings'
+      preLoaderRoute: typeof OwnerEarningsRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/drivers': {
+      id: '/owner/drivers'
+      path: '/drivers'
+      fullPath: '/owner/drivers'
+      preLoaderRoute: typeof OwnerDriversRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/bookings': {
+      id: '/owner/bookings'
+      path: '/bookings'
+      fullPath: '/owner/bookings'
+      preLoaderRoute: typeof OwnerBookingsRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/admin/vehicles': {
+      id: '/admin/vehicles'
+      path: '/vehicles'
+      fullPath: '/admin/vehicles'
+      preLoaderRoute: typeof AdminVehiclesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/owners': {
+      id: '/admin/owners'
+      path: '/owners'
+      fullPath: '/admin/owners'
+      preLoaderRoute: typeof AdminOwnersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/bookings': {
+      id: '/admin/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminBookingsRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/_client/register': {
       id: '/_client/register'
@@ -172,6 +429,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/booking'
       preLoaderRoute: typeof ClientBookingRouteImport
       parentRoute: typeof ClientRoute
+    }
+    '/owner/fleet/new': {
+      id: '/owner/fleet/new'
+      path: '/new'
+      fullPath: '/owner/fleet/new'
+      preLoaderRoute: typeof OwnerFleetNewRouteImport
+      parentRoute: typeof OwnerFleetRoute
     }
     '/_client/fleet/$carId': {
       id: '/_client/fleet/$carId'
@@ -216,8 +480,60 @@ const ClientRouteChildren: ClientRouteChildren = {
 const ClientRouteWithChildren =
   ClientRoute._addFileChildren(ClientRouteChildren)
 
+interface AdminRouteChildren {
+  AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminOwnersRoute: typeof AdminOwnersRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminVehiclesRoute: typeof AdminVehiclesRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminBookingsRoute: AdminBookingsRoute,
+  AdminOwnersRoute: AdminOwnersRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminVehiclesRoute: AdminVehiclesRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface OwnerFleetRouteChildren {
+  OwnerFleetNewRoute: typeof OwnerFleetNewRoute
+}
+
+const OwnerFleetRouteChildren: OwnerFleetRouteChildren = {
+  OwnerFleetNewRoute: OwnerFleetNewRoute,
+}
+
+const OwnerFleetRouteWithChildren = OwnerFleetRoute._addFileChildren(
+  OwnerFleetRouteChildren,
+)
+
+interface OwnerRouteChildren {
+  OwnerBookingsRoute: typeof OwnerBookingsRoute
+  OwnerDriversRoute: typeof OwnerDriversRoute
+  OwnerEarningsRoute: typeof OwnerEarningsRoute
+  OwnerFleetRoute: typeof OwnerFleetRouteWithChildren
+  OwnerIndexRoute: typeof OwnerIndexRoute
+}
+
+const OwnerRouteChildren: OwnerRouteChildren = {
+  OwnerBookingsRoute: OwnerBookingsRoute,
+  OwnerDriversRoute: OwnerDriversRoute,
+  OwnerEarningsRoute: OwnerEarningsRoute,
+  OwnerFleetRoute: OwnerFleetRouteWithChildren,
+  OwnerIndexRoute: OwnerIndexRoute,
+}
+
+const OwnerRouteWithChildren = OwnerRoute._addFileChildren(OwnerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   ClientRoute: ClientRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
+  OwnerRoute: OwnerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

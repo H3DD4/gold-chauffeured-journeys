@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { LayoutDashboard, Users, Building2, Car, Calendar, Settings } from "lucide-react";
 
@@ -13,8 +13,6 @@ const nav = [
 
 export const Route = createFileRoute("/admin")({
   component: () => (
-    <DashboardLayout brand="ARRIVÉE." subtitle="Admin Console" nav={[...nav]} userName="Sofia Admin" userRole="Platform Admin">
-      <Outlet />
-    </DashboardLayout>
+    <DashboardLayout brand="ARRIVÉE." subtitle="Admin Console" nav={[...nav]} userName="Sofia Admin" userRole="Platform Admin" />
   ),
 });
