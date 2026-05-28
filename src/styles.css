@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 /*
  * Design system definition.
  *
@@ -59,42 +61,60 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-obsidian: var(--obsidian);
+  --color-charcoal: var(--charcoal);
+  --color-graphite: var(--graphite);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-ivory: var(--ivory);
+  --color-mist: var(--mist);
+  --font-display: "Cormorant Garamond", serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --radius: 0.5rem;
+  --obsidian: #0A0A0A;
+  --charcoal: #111111;
+  --graphite: #1A1A1A;
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --ivory: #F5F0E8;
+  --mist: rgba(245, 240, 232, 0.6);
+
+  --background: var(--obsidian);
+  --foreground: var(--ivory);
+  --card: var(--charcoal);
+  --card-foreground: var(--ivory);
+  --popover: var(--graphite);
+  --popover-foreground: var(--ivory);
+  --primary: var(--gold);
+  --primary-foreground: #0A0A0A;
+  --secondary: var(--graphite);
+  --secondary-foreground: var(--ivory);
+  --muted: var(--graphite);
+  --muted-foreground: rgba(245, 240, 232, 0.6);
+  --accent: var(--gold);
+  --accent-foreground: #0A0A0A;
+  --destructive: #c0392b;
+  --destructive-foreground: var(--ivory);
+  --border: rgba(201, 168, 76, 0.2);
+  --input: rgba(201, 168, 76, 0.2);
+  --ring: var(--gold);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar: var(--charcoal);
+  --sidebar-foreground: var(--ivory);
+  --sidebar-primary: var(--gold);
+  --sidebar-primary-foreground: #0A0A0A;
+  --sidebar-accent: var(--graphite);
+  --sidebar-accent-foreground: var(--gold);
+  --sidebar-border: rgba(201, 168, 76, 0.15);
+  --sidebar-ring: var(--gold);
 }
 
 .dark {
@@ -140,5 +160,95 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: #0A0A0A;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-mono { font-family: var(--font-mono); }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    backdrop-filter: blur(12px);
+  }
+  .glass-hover:hover {
+    border-color: rgba(201, 168, 76, 0.4);
+    box-shadow: 0 20px 60px -20px rgba(201, 168, 76, 0.25);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #E8C96A 0%, #C9A84C 50%, #A8893A 100%);
+  }
+  .gold-text {
+    background: linear-gradient(135deg, #E8C96A, #C9A84C);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shimmer-sweep 3s ease-in-out infinite;
+  }
+  @keyframes shimmer-sweep {
+    0%, 40% { transform: translateX(-100%); }
+    60%, 100% { transform: translateX(100%); }
+  }
+
+  @keyframes ken-burns {
+    0% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  .ken-burns { animation: ken-burns 12s ease-out forwards; }
+
+  @keyframes float-dust {
+    0% { transform: translate(0, 100vh) scale(0.5); opacity: 0; }
+    10%, 90% { opacity: 0.6; }
+    100% { transform: translate(40px, -10vh) scale(1.2); opacity: 0; }
+  }
+
+  @keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(201, 168, 76, 0); }
+  }
+  .pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
+
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+  .scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
+
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .text-balance { text-wrap: balance; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
