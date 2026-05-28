@@ -9,51 +9,226 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClientRouteImport } from './routes/_client'
+import { Route as ClientIndexRouteImport } from './routes/_client.index'
+import { Route as ClientRegisterRouteImport } from './routes/_client.register'
+import { Route as ClientMyBookingsRouteImport } from './routes/_client.my-bookings'
+import { Route as ClientLoginRouteImport } from './routes/_client.login'
+import { Route as ClientFleetRouteImport } from './routes/_client.fleet'
+import { Route as ClientBookingRouteImport } from './routes/_client.booking'
+import { Route as ClientFleetCarIdRouteImport } from './routes/_client.fleet.$carId'
 
-const IndexRoute = IndexRouteImport.update({
+const ClientRoute = ClientRouteImport.update({
+  id: '/_client',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientIndexRoute = ClientIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ClientRoute,
+} as any)
+const ClientRegisterRoute = ClientRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => ClientRoute,
+} as any)
+const ClientMyBookingsRoute = ClientMyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => ClientRoute,
+} as any)
+const ClientLoginRoute = ClientLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => ClientRoute,
+} as any)
+const ClientFleetRoute = ClientFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => ClientRoute,
+} as any)
+const ClientBookingRoute = ClientBookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => ClientRoute,
+} as any)
+const ClientFleetCarIdRoute = ClientFleetCarIdRouteImport.update({
+  id: '/$carId',
+  path: '/$carId',
+  getParentRoute: () => ClientFleetRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof ClientIndexRoute
+  '/booking': typeof ClientBookingRoute
+  '/fleet': typeof ClientFleetRouteWithChildren
+  '/login': typeof ClientLoginRoute
+  '/my-bookings': typeof ClientMyBookingsRoute
+  '/register': typeof ClientRegisterRoute
+  '/fleet/$carId': typeof ClientFleetCarIdRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/booking': typeof ClientBookingRoute
+  '/fleet': typeof ClientFleetRouteWithChildren
+  '/login': typeof ClientLoginRoute
+  '/my-bookings': typeof ClientMyBookingsRoute
+  '/register': typeof ClientRegisterRoute
+  '/': typeof ClientIndexRoute
+  '/fleet/$carId': typeof ClientFleetCarIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_client': typeof ClientRouteWithChildren
+  '/_client/booking': typeof ClientBookingRoute
+  '/_client/fleet': typeof ClientFleetRouteWithChildren
+  '/_client/login': typeof ClientLoginRoute
+  '/_client/my-bookings': typeof ClientMyBookingsRoute
+  '/_client/register': typeof ClientRegisterRoute
+  '/_client/': typeof ClientIndexRoute
+  '/_client/fleet/$carId': typeof ClientFleetCarIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/booking'
+    | '/fleet'
+    | '/login'
+    | '/my-bookings'
+    | '/register'
+    | '/fleet/$carId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/booking'
+    | '/fleet'
+    | '/login'
+    | '/my-bookings'
+    | '/register'
+    | '/'
+    | '/fleet/$carId'
+  id:
+    | '__root__'
+    | '/_client'
+    | '/_client/booking'
+    | '/_client/fleet'
+    | '/_client/login'
+    | '/_client/my-bookings'
+    | '/_client/register'
+    | '/_client/'
+    | '/_client/fleet/$carId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  ClientRoute: typeof ClientRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_client': {
+      id: '/_client'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ClientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_client/': {
+      id: '/_client/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ClientIndexRouteImport
+      parentRoute: typeof ClientRoute
+    }
+    '/_client/register': {
+      id: '/_client/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof ClientRegisterRouteImport
+      parentRoute: typeof ClientRoute
+    }
+    '/_client/my-bookings': {
+      id: '/_client/my-bookings'
+      path: '/my-bookings'
+      fullPath: '/my-bookings'
+      preLoaderRoute: typeof ClientMyBookingsRouteImport
+      parentRoute: typeof ClientRoute
+    }
+    '/_client/login': {
+      id: '/_client/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof ClientLoginRouteImport
+      parentRoute: typeof ClientRoute
+    }
+    '/_client/fleet': {
+      id: '/_client/fleet'
+      path: '/fleet'
+      fullPath: '/fleet'
+      preLoaderRoute: typeof ClientFleetRouteImport
+      parentRoute: typeof ClientRoute
+    }
+    '/_client/booking': {
+      id: '/_client/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof ClientBookingRouteImport
+      parentRoute: typeof ClientRoute
+    }
+    '/_client/fleet/$carId': {
+      id: '/_client/fleet/$carId'
+      path: '/$carId'
+      fullPath: '/fleet/$carId'
+      preLoaderRoute: typeof ClientFleetCarIdRouteImport
+      parentRoute: typeof ClientFleetRoute
     }
   }
 }
 
+interface ClientFleetRouteChildren {
+  ClientFleetCarIdRoute: typeof ClientFleetCarIdRoute
+}
+
+const ClientFleetRouteChildren: ClientFleetRouteChildren = {
+  ClientFleetCarIdRoute: ClientFleetCarIdRoute,
+}
+
+const ClientFleetRouteWithChildren = ClientFleetRoute._addFileChildren(
+  ClientFleetRouteChildren,
+)
+
+interface ClientRouteChildren {
+  ClientBookingRoute: typeof ClientBookingRoute
+  ClientFleetRoute: typeof ClientFleetRouteWithChildren
+  ClientLoginRoute: typeof ClientLoginRoute
+  ClientMyBookingsRoute: typeof ClientMyBookingsRoute
+  ClientRegisterRoute: typeof ClientRegisterRoute
+  ClientIndexRoute: typeof ClientIndexRoute
+}
+
+const ClientRouteChildren: ClientRouteChildren = {
+  ClientBookingRoute: ClientBookingRoute,
+  ClientFleetRoute: ClientFleetRouteWithChildren,
+  ClientLoginRoute: ClientLoginRoute,
+  ClientMyBookingsRoute: ClientMyBookingsRoute,
+  ClientRegisterRoute: ClientRegisterRoute,
+  ClientIndexRoute: ClientIndexRoute,
+}
+
+const ClientRouteWithChildren =
+  ClientRoute._addFileChildren(ClientRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  ClientRoute: ClientRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
