@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
+import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+type Props = Omit<HTMLMotionProps<"button">, "children"> & {
   variant?: "primary" | "ghost" | "outline";
   size?: "sm" | "md" | "lg";
   children: ReactNode;
@@ -30,7 +30,7 @@ export const GoldButton = forwardRef<HTMLButtonElement, Props>(function GoldButt
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
       className={cn(base, sizes[size], variants[variant], className)}
-      {...(rest as never)}
+      {...rest}
     >
       <span className="relative z-10 inline-flex items-center gap-2">{children}</span>
     </motion.button>
