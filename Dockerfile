@@ -1,24 +1,29 @@
 # syntax=docker/dockerfile:1
 
-FROM node:20-alpine AS deps
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+# ── Stage 1: Build ──────────────────────────────────────────────────────────
+FROM oven/bun:1 AS builder
 
-FROM node:20-alpine AS build
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+
+# Install dependencies using Bun's lockfile for reproducible installs
+COPY package.json bun.lock bunfig.toml ./
+RUN bun install --frozen-lockfile
+
+# Copy source and build
 COPY . .
-RUN npm run build
+RUN bun run build
 
-FROM node:20-alpine AS runner
+# ── Stage 2: Runtime ─────────────────────────────────────────────────────────
+FROM oven/bun:1-slim AS runner
+
 WORKDIR /app
+
 ENV NODE_ENV=production
-ENV PORT=4173
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/vite.config.ts ./vite.config.ts
-COPY --from=build /app/tsconfig.json ./tsconfig.json
-COPY --from=build /app/dist ./dist
-EXPOSE 4173
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
+
+# TanStack Start / Nitro outputs a self-contained server in .output
+COPY --from=builder /app/.output ./.output
+
+EXPOSE 3000
+
+# Nitro's output entry point
+CMD ["bun", ".output/server/index.mjs"]
